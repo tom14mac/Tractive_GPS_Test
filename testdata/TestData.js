@@ -17,8 +17,8 @@ export class TestData {
         const password = this.generatePassword(8);    // Password generation
 
         return {
-            firstName: 'Test1_FirstName',      // Ensure this is properly set
-            lastName: 'Test2_LastName',
+            firstName: 'Test213213',      // Ensure this is properly set
+            lastName: '12321',
             email: 'macwantejash@gmail.com',
             password: password
         };
