@@ -55,7 +55,7 @@ Node.js (>= 14.0.0)
 npm (Node Package Manager)
 Installation
 Clone the repository:
-git clone https://github.com/yourusername/tractive-automation.git
+git clone  'https://github.com/tom14mac/Tractive_GPS_Test.git
 Change to the project directory:
 
 cd tractive-automation
