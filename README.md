@@ -55,16 +55,12 @@ Node.js (>= 14.0.0)
 npm (Node Package Manager)
 Installation
 Clone the repository:
-bash
-Copy code
 git clone https://github.com/yourusername/tractive-automation.git
 Change to the project directory:
-bash
-Copy code
+
 cd tractive-automation
 Install the necessary dependencies:
-bash
-Copy code
+
 npm install
 Configuration
 No configuration is required for this test suite, but you can adjust test data in the testdata/testData.js file for different test scenarios (e.g., valid and invalid login credentials).
@@ -72,7 +68,6 @@ No configuration is required for this test suite, but you can adjust test data i
 Running the Tests
 To run the tests, use the following command:
 npx mocha --timeout 60000 --recursive
-
 
 Test Scenarios Included
 Login Tests:
