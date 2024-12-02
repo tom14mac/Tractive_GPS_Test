@@ -1,0 +1,257 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 7,
+    "passes": 6,
+    "pending": 0,
+    "failures": 1,
+    "start": "2024-12-02T16:10:41.865Z",
+    "end": "2024-12-02T16:11:58.836Z",
+    "duration": 76971,
+    "testsRegistered": 7,
+    "passPercent": 85.71428571428571,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "cec6a144-7b1e-463c-83aa-f05ddb37340a",
+      "title": "",
+      "fullFile": "C:\\Users\\LENOVO\\AquaProjects\\Tractive_GPS_Test\\tests\\End_toEnd_Tests.spec.js",
+      "file": "\\tests\\End_toEnd_Tests.spec.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "c93137ac-3e2a-4f94-be6a-e5f0ce9063d5",
+          "title": "End-to-End Tests",
+          "fullFile": "C:\\Users\\LENOVO\\AquaProjects\\Tractive_GPS_Test\\tests\\End_toEnd_Tests.spec.js",
+          "file": "\\tests\\End_toEnd_Tests.spec.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook in \"End-to-End Tests\"",
+              "fullTitle": "End-to-End Tests \"before all\" hook in \"End-to-End Tests\"",
+              "timedOut": false,
+              "duration": 18115,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "this.timeout(30000);  // Increase timeout for async operations\nbrowser = await firefox.launch({headless: false});\ncontext = await browser.newContext();\n// Add cookies\nawait context.addCookies([{\n    name: 'interview',\n    value: '7lBPV9iik6r9MNE5dKw9nzF9CstdlEJl',\n    domain: '.tractive.com',\n    path: '/',\n    secure: true,\n}]);\npage = await context.newPage();\nloginPage = new LoginPage(page);\nhomePage = new HomePage(page);\nsignUpPage = new SignUpPage(page);\ntestData = new TestData();  // Corrected instantiation",
+              "err": {},
+              "uuid": "60fd37ba-b543-4e37-8cdb-65a792fbd842",
+              "parentUUID": "c93137ac-3e2a-4f94-be6a-e5f0ce9063d5",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [
+            {
+              "title": "\"after all\" hook in \"End-to-End Tests\"",
+              "fullTitle": "End-to-End Tests \"after all\" hook in \"End-to-End Tests\"",
+              "timedOut": false,
+              "duration": 1534,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "this.timeout(5000);  // Increase timeout for after hook if needed\nif (page) await page.close();\nif (browser) await browser.close();",
+              "err": {},
+              "uuid": "ecec43f5-b807-446c-ab82-418f133f63b3",
+              "parentUUID": "c93137ac-3e2a-4f94-be6a-e5f0ce9063d5",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "tests": [
+            {
+              "title": "should verify URL and Title and login page",
+              "fullTitle": "End-to-End Tests should verify URL and Title and login page",
+              "timedOut": false,
+              "duration": 7008,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "this.timeout(30000);  // Increase timeout for this test\nawait loginPage.open();\nawait page.waitForSelector('button[type=\"submit\"]');  // Ensure the login button is visible\nawait page.evaluate(() => {\n    window.moveTo(0, 0);\n    window.resizeTo(window.screen.availWidth, window.screen.availHeight);\n});\nconst currentUrl = await page.url();\nexpect(currentUrl).to.include(loginPage.url);\nawait homePage.verifyPageTitle();",
+              "err": {},
+              "uuid": "feefa7c7-e6ab-43fe-9426-d2b484883812",
+              "parentUUID": "c93137ac-3e2a-4f94-be6a-e5f0ce9063d5",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should log in with valid credentials with singout",
+              "fullTitle": "End-to-End Tests should log in with valid credentials with singout",
+              "timedOut": false,
+              "duration": 16367,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "this.timeout(30000);  // Increase timeout for this test\n// Log the start of the test\nconsole.log('Starting login test with valid credentials');\nconst loginData = testData.valid_login();  // Use valid login data\n// Ensure the email field is visible and enter email\nawait loginPage.enterEmail(loginData.email);\nconsole.log('Entered email');\n// Ensure the password field is visible and enter password\nawait loginPage.enterPassword(loginData.password);\nconsole.log('Entered password');\n// Wait for submit button to be clickable and click it\nawait loginPage.clickSubmitButton();\nconsole.log('Clicked submit button');\n// Wait for login success confirmation\nconst isLoginSuccessful = await loginPage.isLoginSuccessful();\nexpect(isLoginSuccessful).to.be.true;\n// If login is successful, log out\nif (isLoginSuccessful) {\n    console.log('Login successful, proceeding to sign out');\n    await homePage.signOut();\n} else {\n    console.error('Login failed');\n}",
+              "err": {
+                "message": "TimeoutError: page.waitForSelector: Timeout 15000ms exceeded.\nCall log:\n  - waiting for locator('//div[@class=\\'sign-out-container\\']//tgps-sidebar-action-item[@class=\\'ng-scope ng-isolate-scope\\']') to be visible\n",
+                "estack": "page.waitForSelector: Timeout 15000ms exceeded.\nCall log:\n  - waiting for locator('//div[@class=\\'sign-out-container\\']//tgps-sidebar-action-item[@class=\\'ng-scope ng-isolate-scope\\']') to be visible\n\n    at HomePage.signOut (Pages\\Homepage.js:62:29)\n    at Context.<anonymous> (tests\\End_toEnd_Tests.spec.js:81:32)",
+                "diff": null
+              },
+              "uuid": "cc409e0b-50af-4834-9183-2987eea2aa13",
+              "parentUUID": "c93137ac-3e2a-4f94-be6a-e5f0ce9063d5",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should show an error for invalid login credentials",
+              "fullTitle": "End-to-End Tests should show an error for invalid login credentials",
+              "timedOut": false,
+              "duration": 1376,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "this.timeout(90000);  // Increase timeout for this test\nconst loginData = testData.invalid_login();  // Use invalid login data\nawait loginPage.enterEmail(loginData.email);\nawait loginPage.enterPassword(loginData.password);\nawait loginPage.clickSubmitButton();\n// Variable to store alert message\nlet alertMessage = '';\n// Handle the dialog pop-up\npage.on('dialog', async (dialog) => {\n    alertMessage = dialog.message();  // Capture the dialog message\n    console.log('Alert Message: ', alertMessage);  // Log the alert message for debugging\n    await dialog.accept();  // Accept the alert (close the alert)\n});\n// Wait for the dialog to appear (if needed, you can also add a short delay before proceeding)\nawait page.waitForTimeout(1000);  // Adjust timeout as needed\n// Assert that the alert message matches the expected error message\nexpect(alertMessage).to.equal(alertMessage);  // Change the message to match your app's error message\n//const isLoginPageVisible = await loginPage.isLoginPageVisible();\n//expect(isLoginPageVisible).to.be.true;",
+              "err": {},
+              "uuid": "fed87627-e301-4493-8bf1-4e3f4346d273",
+              "parentUUID": "c93137ac-3e2a-4f94-be6a-e5f0ce9063d5",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should validate and submit the sign-up form",
+              "fullTitle": "End-to-End Tests should validate and submit the sign-up form",
+              "timedOut": false,
+              "duration": 863,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "this.timeout(80000);  // Increase timeout for this test\nawait signUpPage.open();  // Now it will open the sign-up page correctly\nconst currentUrl = await page.url();\nexpect(currentUrl).to.include(signUpPage.url);\nawait signUpPage.EmptyFieldFocus();\nawait signUpPage.assertFirstNameValidation();\nawait signUpPage.assertLastNameValidation();\nawait signUpPage.assertEmailValidation();\nawait signUpPage.assertPasswordValidation();",
+              "err": {},
+              "uuid": "4d528ace-47e5-44d5-a424-c71a99d3497c",
+              "parentUUID": "c93137ac-3e2a-4f94-be6a-e5f0ce9063d5",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should validate invalid email format",
+              "fullTitle": "End-to-End Tests should validate invalid email format",
+              "timedOut": false,
+              "duration": 590,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const invalidData = testData.invalid_Email_password(); // Retrieve invalid email from test data\n// Enter invalid email and verify validation message\nawait signUpPage.enterInvalidEmail(invalidData.email);\nawait signUpPage.assertInvalidEmailValidation();",
+              "err": {},
+              "uuid": "c0e9a235-38c4-4574-9e6c-86c09b1a2b81",
+              "parentUUID": "c93137ac-3e2a-4f94-be6a-e5f0ce9063d5",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should validate password length",
+              "fullTitle": "End-to-End Tests should validate password length",
+              "timedOut": false,
+              "duration": 106,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const invalidData = testData.invalid_Email_password(); // Retrieve invalid password from test data\n// Enter invalid password and verify validation message\nawait signUpPage.enterInvalidPassword(invalidData.password);\nawait signUpPage.assertPasswordLengthValidation();",
+              "err": {},
+              "uuid": "c9a4159f-9520-4fe0-8580-00edf41171f7",
+              "parentUUID": "c93137ac-3e2a-4f94-be6a-e5f0ce9063d5",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should successfully submit the form with valid data with same Email already Exist",
+              "fullTitle": "End-to-End Tests should successfully submit the form with valid data with same Email already Exist",
+              "timedOut": false,
+              "duration": 30973,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "this.timeout(70000);\nconst validData = testData.valid_signup_data(); // Retrieve valid signup data from test data\n// Enter valid data into the form fields\nawait signUpPage.enterFirstName(validData.firstName);\nawait signUpPage.enterLastname(validData.lastName);\nawait signUpPage.enterEmail(validData.email);\nawait signUpPage.enterPassword(validData.password);\n// If there is a checkbox, click it\nawait signUpPage.clickCheckbox();\n// Submit the form if the submit button is visible\nawait signUpPage.clickSubmitButtonIfVisible();\n// Wait for a moment for the submission to process\nconsole.log('Waiting for ...');\nawait page.waitForTimeout(30000);  // Pause execution for 30 seconds\n// Check for any dialog box (in case of success or failure)\npage.on('dialog', async (dialog) => {\n    const alertMessage = dialog.message();\n    console.log('Alert Message:', alertMessage);\n    if (alertMessage.includes('Account creation failed. You entered invalid information.')) {\n        await dialog.accept();  // Close the dialog\n        console.log('Dialog error message verified.');\n        expect(alertMessage).to.include('Account creation failed. You entered invalid information.');\n    }\n});\nconsole.log('Account creation failed.!');\nconst currentUrl = await page.url();\nexpect(currentUrl).to.include(signUpPage.url);",
+              "err": {},
+              "uuid": "d63f4302-aa6e-42a8-bdee-23aa7c23b50c",
+              "parentUUID": "c93137ac-3e2a-4f94-be6a-e5f0ce9063d5",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "feefa7c7-e6ab-43fe-9426-d2b484883812",
+            "fed87627-e301-4493-8bf1-4e3f4346d273",
+            "4d528ace-47e5-44d5-a424-c71a99d3497c",
+            "c0e9a235-38c4-4574-9e6c-86c09b1a2b81",
+            "c9a4159f-9520-4fe0-8580-00edf41171f7",
+            "d63f4302-aa6e-42a8-bdee-23aa7c23b50c"
+          ],
+          "failures": [
+            "cc409e0b-50af-4834-9183-2987eea2aa13"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 57283,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "10.8.2"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": null,
+      "version": "6.2.0"
+    }
+  }
+}

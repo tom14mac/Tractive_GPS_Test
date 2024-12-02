@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "mocha 'tests/End_toEnd_Tests.spec.js'"
+    "test": "npx mocha tests --reporter mochawesome"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +14,7 @@
     "@types/node": "^22.10.1",
     "chai": "^5.1.2",
     "mocha": "^10.8.2",
+    "mochawesome": "^7.1.3",
     "sinon": "^19.0.2"
   },
   "directories": {
