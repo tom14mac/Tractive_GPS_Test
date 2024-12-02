@@ -34,8 +34,7 @@ This project automates the registration and login functionality of the Tractive 
 Project Structure
 The project is structured as follows:
 
-bash
-Copy code
+
 /tractive-automation
 |-- /node_modules          # Node.js modules
 |-- /Pages                 # Page Object Models
