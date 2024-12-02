@@ -1,0 +1,28 @@
+{
+  "name": "tractive_gps_test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "mocha 'tests/End_toEnd_Tests.spec.js'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "@types/node": "^22.10.1",
+    "chai": "^5.1.2",
+    "mocha": "^10.8.2",
+    "sinon": "^19.0.2"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "playwright": "^1.49.0",
+    "playwright-core": "^1.49.0",
+    "undici-types": "^6.20.0"
+  },
+  "description": ""
+}
