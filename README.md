@@ -31,9 +31,7 @@ Here is an example of how you can write a README.md file for your GitHub reposit
 Tractive Automation Testing
 This project automates the registration and login functionality of the Tractive System (https://my-stage.tractive.com) using Playwright, Mocha, and Page Object Model (POM). The tests validate various scenarios for both login and registration features and include meaningful assertions for error handling and form validation.
 
-Project Structure
-The project is structured as follows:
-
+Project Structure (POM)
 
 /tractive-automation
 |-- /node_modules          # Node.js modules
