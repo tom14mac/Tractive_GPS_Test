@@ -51,6 +51,26 @@ describe('End-to-End Tests', function() {
         await homePage.verifyPageTitle();
     });
 
+    it('should verify the presence of the Tractive logo', async function () {
+        this.timeout(10000); // Set a timeout for the test
+        await loginPage.open(); // Ensure you're on the correct page
+
+        // Check if the logo is visible on the page
+        const logoSelector = '//img[@alt="Tractive Logo"]';
+        const isLogoVisible = await page.isVisible(logoSelector);
+
+        // Log the result for debugging purposes
+        if (isLogoVisible) {
+            console.log('Logo is visible on the page.');
+        } else {
+            console.error('Logo is NOT visible on the page.');
+        }
+
+        // Assert that the logo is indeed visible
+        expect(isLogoVisible).to.be.true;
+    });
+
+
     it('should log in with valid credentials with singout', async function () {
             this.timeout(30000);  // Increase timeout for this test
 
