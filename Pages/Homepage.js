@@ -59,7 +59,7 @@ export class HomePage {
         try {
             console.log('Attempting to sign out...');
             // Wait for the "Sign Out" button to be visible
-            await this.page.waitForSelector(this.signOutButton, { timeout: 15000 });
+            await this.page. waitForSelector(this.signOutButton, { timeout: 15000 });
 
             // Click the "Sign Out" button
             await this.page.click(this.signOutButton);

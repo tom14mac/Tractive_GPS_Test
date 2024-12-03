@@ -19,8 +19,8 @@ export class TestData {
         return {
             firstName: 'Test_data1',      // Ensure this is properly set
             lastName: 'Test_data2',
-            email: 'macwantejash@gmail.com',
-            password: password
+            email: 'macwantejaskumar@gmail.com',
+            password: 'TEjavac@14'
         };
     }
 

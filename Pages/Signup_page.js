@@ -21,6 +21,13 @@ export class SignUpPage {
         this.passwordValidation = page.locator("//tcommon-form-field[@icon-left='/img/login/ic-password.svg']//em[normalize-space()='This field is required.']");
         this.emailFieldInvalid = page.locator("//em[normalize-space()='The email address is invalid.']");
         this.passwordlenght=page.locator("//em[normalize-space()='Minimum length is 8 characters.']");
+        this.googleSignInButton = page.locator("//tcommon-google-signin-button[@class='ng-isolate-scope']");
+
+        // iframe locators
+        this.iframe = page.locator("//iframe[contains(@src, 'accounts.google.com')]");
+        this.email_google = page.locator("//input[@type='email']");
+        this.next_button = page.locator("//span[normalize-space()='Next']");
+        this.password_google = page.locator("//input[@type='password']");
     }
 
     // This method will navigate to the SignUp page
@@ -148,30 +155,53 @@ export class SignUpPage {
             console.log("Checkbox is not visible.");
         }
     }
+
     async handleGoogleSignInProcess() {
         try {
-            const googleSignInButton = this.page.locator("//tcommon-google-signin-button[@class='ng-isolate-scope']");
-            if (await googleSignInButton.isVisible()) {
-                await googleSignInButton.click();
+            // Check if the "Sign In with Google" button is visible and click it
+            if (await this.googleSignInButton.isVisible()) {
+                await this.googleSignInButton.click();
                 console.log("Clicked on 'Sign In with Google' button.");
             } else {
                 throw new Error("'Sign In with Google' button not found.");
             }
-            await this.page.waitForSelector('iframe', { state: 'attached', timeout: 10000 });
+
+            // Wait for the Google Sign-In iframe to load
+            await this.page.waitForSelector(this.iframe, { state: 'attached', timeout: 150000 });
             console.log("Google Sign-In iframe appeared.");
-            const iframe = await this.page.frame({ url: /accounts\.google\.com/ });
+
+            const iframe = this.page.frameLocator(this.iframe);
             if (!iframe) {
                 throw new Error("Google Sign-In iframe not found or failed to load.");
             }
             console.log("Switched to Google Sign-In iframe.");
-            const iframeLocator = iframe.locator("//iframe[@id='gsi_862948_12528']");
-            await iframeLocator.waitFor({ state: 'visible', timeout: 50000 });
-            console.log("Located user email iframe inside the Google Sign-In iframe.");
-            await iframeLocator.click();
-            console.log("Clicked on the user email successfully.");
+            const emailInput = iframe.locator(this.email_google);
+            await emailInput.waitFor({ state: 'visible', timeout: 15000 });
+            await emailInput.fill('macwantejaskumar@gmail.com');
+            console.log("Email entered successfully.");
+            const nextButton = iframe.locator(this.next_button);
+            await nextButton.waitFor({ state: 'visible', timeout: 10000 });
+            console.log("Found 'Next' button, clicking it.");
+            await nextButton.click();
+            const password_Input = iframe.locator(this.password_google);
+            await password_Input.waitFor({ state: 'visible', timeout: 15000 });
+            await password_Input.fill('Test@123');
+            console.log("password entered successfully.");
+            await nextButton.click();
         } catch (error) {
             console.error("Error during Google Sign-In process:", error.message);
             throw error;
+        }
+    }
+    async isGoogleSignInSuccessful() {
+        try {
+            const profilePic = this.page.locator("//img[@class='profile-pic']"); // Replace with the actual class or selector
+            await profilePic.waitFor({ state: 'visible', timeout: 20000 });
+            console.log("Google sign-in successful: Profile picture is visible.");
+            return true;
+        } catch (error) {
+            console.error("Google sign-in failed: " + error.message);
+            return false;
         }
     }
 
