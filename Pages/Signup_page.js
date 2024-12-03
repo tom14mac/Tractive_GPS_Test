@@ -167,7 +167,7 @@ export class SignUpPage {
             }
 
             // Wait for the Google Sign-In iframe to load
-            await this.page.waitForSelector(this.iframe, { state: 'attached', timeout: 150000 });
+            await this.page.waitForSelector(this.iframe, { state: 'attached', timeout: 30000 });
             console.log("Google Sign-In iframe appeared.");
 
             const iframe = this.page.frameLocator(this.iframe);

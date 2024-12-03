@@ -39,7 +39,7 @@ export class TestData {
         return {
             firstName: 'Alexa',      // Ensure this is properly set
             lastName: 'muller',
-            email: 'macwantejaskumar@gmail.com',
+            email: email,
             password: password
         };
     }
