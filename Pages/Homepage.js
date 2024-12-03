@@ -2,10 +2,12 @@
 export class HomePage {
     constructor(page) {
         this.page = page;
+        this.Manage_page_url ="https://my-stage.tractive.com/#/settings/user-profile/profile";
         this.pageTitleOptions = [
             'Welcome to the Tractive Web App | Activate Tracker | Sign in',
             'Tractive GPS - Sign In - Find your lost dog and cat',
         ];
+        this.Manage_page_title ="Tractive GPS - Login Details - Find your lost dog and cat";
         this.signOutButton = "//div[@class='sign-out-container']//tgps-sidebar-action-item[@class='ng-scope ng-isolate-scope']";
         this.checkBox_selectDevice = "//div[@class='tcommon-check__mask']";
         this.signoutAction = "//button[@class='tcommon-button tcommon-button--primary']";
@@ -32,14 +34,37 @@ export class HomePage {
             throw error;
         }
     }
+    async verifyUrl_ManagePage() {
+        const currentUrl = this.page.Manage_page_url; // Correct way to get the current URL in WebDriverIO
+        assert.strictEqual(currentUrl, this.Manage_page_url, 'URL does not match');
+    }
 
+    async verifyManagePageTitle() {
+        try {
+            this.timeout(30000);
+            const title = await this.page.title();
+            console.log('Actual Page Title:', title);
+
+            const isTitleValid = this.Manage_page_title.some(expectedTitle =>
+                title.includes(expectedTitle)
+            );
+
+            if (!isTitleValid) {
+                throw new Error(`Expected page title to include one of ${JSON.stringify(this.Manage_page_title)}, but found "${title}"`);
+            }
+
+            console.log('Page title verified successfully.');
+        } catch (error) {
+            console.error('Error verifying page title:', error.message);
+            throw error;
+        }
+    }
     async verifyPageTitle() {
         try {
             this.timeout(30000);
             const title = await this.page.title();
             console.log('Actual Page Title:', title);
 
-            // Check if the title matches any of the expected options
             const isTitleValid = this.pageTitleOptions.some(expectedTitle =>
                 title.includes(expectedTitle)
             );

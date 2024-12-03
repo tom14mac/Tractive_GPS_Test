@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="04662fe1-7448-4cba-92b9-88e2c3f301f2" name="Changes" comment="Initial commit of automation code">
-      <change beforePath="$PROJECT_DIR$/Pages/Signup_page.js" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Signup_page.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pages/Homepage.js" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Homepage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mochawesome-report/mochawesome.html" beforeDir="false" afterPath="$PROJECT_DIR$/mochawesome-report/mochawesome.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mochawesome-report/mochawesome.json" beforeDir="false" afterPath="$PROJECT_DIR$/mochawesome-report/mochawesome.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/testdata/TestData.js" beforeDir="false" afterPath="$PROJECT_DIR$/testdata/TestData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/End_toEnd_Tests.spec.js" beforeDir="false" afterPath="$PROJECT_DIR$/tests/End_toEnd_Tests.spec.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

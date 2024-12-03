@@ -6,11 +6,11 @@ import { TestData } from '../testdata/TestData.js';
 import {Helper} from "../utils/helper.js";
 import { expect } from 'chai';
 
-describe('End-to-End Tests', function() {
+describe('End-to-End Tests', function Tractive_Signup_Login_Functionality() {
     let browser, context, page;
     let loginPage, homePage, signUpPage, testData,helper;
 
-    before(async function () {
+    before(async function Before_Test() {
         this.timeout(60000);  // Increase timeout for async operations
         browser = await firefox.launch({headless: false});
         context = await browser.newContext();
@@ -31,13 +31,13 @@ describe('End-to-End Tests', function() {
         testData = new TestData();  // Corrected instantiation
     });
 
-    after(async function () {
+    after(async function After_Test() {
         this.timeout(5000);  // Increase timeout for after hook if needed
         if (page) await page.close();
         if (browser) await browser.close();
     });
 
-    it('should verify URL and Title and login page', async function () {
+    it('should verify URL and Title and login page', async function verifyUrlAndTitle() {
         this.timeout(30000);  // Increase timeout for this test
         await loginPage.open();
         await page.waitForSelector('button[type="submit"]');  // Ensure the login button is visible
@@ -52,7 +52,7 @@ describe('End-to-End Tests', function() {
         await homePage.verifyPageTitle();
     });
 
-    it('should verify the presence of the Tractive logo', async function () {
+    it('should verify the presence of the Tractive logo', async function verifyLogoVisibility() {
         this.timeout(10000); // Set a timeout for the test
         await loginPage.open(); // Ensure you're on the correct page
         // Check if the logo is visible on the page
@@ -67,7 +67,7 @@ describe('End-to-End Tests', function() {
         expect(isLogoVisible).to.be.true;
     });
 
-    it('should log in with valid credentials with singout', async function () {
+    it('should log in with valid credentials with singout', async function validLoginAndSignOut() {
             this.timeout(30000);  // Increase timeout for this test
             console.log('Starting login test with valid credentials');
             const loginData = testData.valid_login();  // Use valid login data
@@ -90,9 +90,8 @@ describe('End-to-End Tests', function() {
             }
         });
 
-    it('should show an error for invalid login credentials', async function () {
+    it('should show an error for invalid login credentials', async function invalidLoginError() {
         this.timeout(90000);  // Increase timeout for this test
-
         const loginData = testData.invalid_login();  // Use invalid login data
         await loginPage.enterEmail(loginData.email);
         await loginPage.enterPassword(loginData.password);
@@ -112,7 +111,7 @@ describe('End-to-End Tests', function() {
         //expect(isLoginPageVisible).to.be.true;
     });
 
-    it('sign in Google Auth', async function () {
+    it('sign in Google Auth', async function googleAuthSignIn() {
         this.timeout(60000); // Set a custom timeout for handling potential delays in the sign-in flow
         // Handle the Google Sign-In process
         console.log('Starting Google Sign-In process...');
@@ -122,7 +121,7 @@ describe('End-to-End Tests', function() {
         //expect(isGoogleSignInSuccessful, 'Google Sign-In faile..' + 'd').to.be.true;
     });
 
-    it('should validate and submit the sign-up form', async function () {
+    it('should validate and submit the sign-up form', async function validateSignUpForm() {
         this.timeout(80000);  // Increase timeout for this test
         await signUpPage.open();  
         const currentUrl = await page.url();
@@ -134,7 +133,7 @@ describe('End-to-End Tests', function() {
         await signUpPage.assertPasswordValidation();
     });
 
-    it('should validate invalid email format', async function () {
+    it('should validate invalid email format', async function ValidateInvalidEmailFormat() {
         this.timeout(60000);
         const invalidData = testData.invalid_Email_password();
         // Retrieve invalid email from test data
@@ -143,7 +142,7 @@ describe('End-to-End Tests', function() {
         await signUpPage.assertInvalidEmailValidation();
     });
 
-    it('should validate password length', async function () {
+    it('should validate password length', async function ValidateInvalidPasswordLength() {
         const invalidData = testData.invalid_Email_password();
         // Retrieve invalid password from test data
         // Enter invalid password and verify validation message
@@ -151,7 +150,7 @@ describe('End-to-End Tests', function() {
         await signUpPage.assertPasswordLengthValidation();
     });
 
-    it('should successfully submit the form with valid data with same Email already Exist', async function () {
+    it('should successfully submit the form with valid data with same Email already Exist', async function submitSignUpWithExistingEmail() {
         this.timeout(70000);
         const validData = testData.valid_signup_data();
         // Retrieve valid signup data from test data
@@ -181,7 +180,7 @@ describe('End-to-End Tests', function() {
         expect(currentUrl).to.include(currentUrl);
     });
 
-    it('should submit the Signup form with Invalid data Passing', async function () {
+    it('should submit the Signup form with Invalid data Passing', async function submitSignUpWithInvalidData() {
         this.timeout(70000);
         const InvalidData = testData.Invalid_signup_data(); // Retrieve valid signup data from test data
         // Enter Invalid data into the form fields
@@ -193,14 +192,14 @@ describe('End-to-End Tests', function() {
         await signUpPage.clickSubmitButtonIfNotVisible();
     });
 
-    it('should submit the Sign-Up form with new fresh_data with new Email data Passing', async function () {
+    it('should submit the Sign-Up form with new fresh_data with new Email data Passing', async function submitSignUpWithFreshData() {
         this.timeout(70000); // Adjust timeout for async operations
         const Valid_New_fresh_Data = testData.Valid_new_signup_data();
         await signUpPage.enterFirstName(Valid_New_fresh_Data.firstName);
         await signUpPage.enterLastname(Valid_New_fresh_Data.lastName);
         await signUpPage.enterEmail(Valid_New_fresh_Data.email);
         await signUpPage.enterPassword(Valid_New_fresh_Data.password);
-        await signUpPage.clickSubmitButtonIfVisible()
+        await signUpPage.clickSubmitButtonIfVisible();
         let alertMessage = '';
         page.on('dialog', async (dialog) => {
             alertMessage = dialog.message();
@@ -210,4 +209,16 @@ describe('End-to-End Tests', function() {
         await page.waitForTimeout(1000);
         expect(alertMessage).to.equal(alertMessage);
     });
+    it('should log in and change email and password', async function logInAndChangeCredentials() {
+        this.timeout(30000);
+        await loginPage.open();
+        const loginData = testData.valid_login();  // Use valid login data
+        await loginPage.enterEmail(loginData.email);
+        await loginPage.enterPassword(loginData.password);
+        await loginPage.clickSubmitButton();
+        await HomePage.verifyUrl_ManagePage();
+
+
+    });
+
 });

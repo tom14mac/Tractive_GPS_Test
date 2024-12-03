@@ -1,7 +1,7 @@
 export class TestData {
 
     valid_login() {
-        return { email: 'macwantejash@gmail.com', password: 'TEjavac@14' };
+        return { email: 'macwantejas@gmail.com', password: 'TEjavac@14' };
     }
 
     invalid_login() {
