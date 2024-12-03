@@ -12,6 +12,10 @@ export class HomePage {
         this.checkBox_selectDevice = "//div[@class='tcommon-check__mask']";
         this.signoutAction = "//button[@class='tcommon-button tcommon-button--primary']";
         this.signOut_btn = "//tcommon-button[@class='ng-scope ng-isolate-scope']//button[@class='tcommon-button tcommon-button--primary']";
+        this.userProfile ="//tcommon-tile[@ui-sref='^.userProfile.profile']";
+        this.loginDetails = "//li[normalize-space()='Login Details']";
+        this.EditEmailId="//span[@ng-click='tgpsAccountPage.emailEditModeActive = true;tgpsAccountPage.accountForm.$setDirty();']";
+        this.EditPassword ="//span[@ng-click='tgpsAccountPage.passwordEditModeActive = true;tgpsAccountPage.accountForm.$setDirty();']" ;
     }
 
     async setCookies() {
@@ -80,6 +84,7 @@ export class HomePage {
         }
     }
 
+
     async signOut() {
         try {
             console.log('Attempting to sign out...');
@@ -97,6 +102,29 @@ export class HomePage {
             console.log('Successfully signed out.');
         } catch (error) {
             console.error('Error during sign out:', error.message);
+            throw error;
+        }
+    }
+    async clickUserProfile() {
+        try {
+            console.log('Clicking on the user profile...');
+            await this.page.waitForSelector(this.userProfile, {timeout: 15000});
+            await this.page.click(this.userProfile);
+            console.log('User profile clicked successfully.');
+        } catch (error) {
+            console.error('Error clicking on user profile:', error.message);
+            throw error;
+        }
+    }
+    async LoginDetails() {
+        try {
+            console.log('Clicking on the user profile...');
+            await this.page.waitForSelector(this.loginDetails
+                , {timeout: 15000});
+            await this.page.click(this.loginDetails);
+
+        } catch (error) {
+            console.error('Error clicking on user profile:', error.message);
             throw error;
         }
     }

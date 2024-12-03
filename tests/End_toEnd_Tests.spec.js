@@ -216,9 +216,11 @@ describe('End-to-End Tests', function Tractive_Signup_Login_Functionality() {
         await loginPage.enterEmail(loginData.email);
         await loginPage.enterPassword(loginData.password);
         await loginPage.clickSubmitButton();
-        await HomePage.verifyUrl_ManagePage();
-
-
+        this.timeout(60000);
+        await homePage.verifyUrl_ManagePage();
+        await homePage.verifyManagePageTitle();
+        await homePage.clickUserProfile();
+        await homepage.LoginDetails();
     });
 
 });
