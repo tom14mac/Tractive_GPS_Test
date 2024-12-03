@@ -150,7 +150,6 @@ export class SignUpPage {
     }
     async handleGoogleSignInProcess() {
         try {
-            // Click the "Sign In with Google" button
             const googleSignInButton = this.page.locator("//tcommon-google-signin-button[@class='ng-isolate-scope']");
             if (await googleSignInButton.isVisible()) {
                 await googleSignInButton.click();
@@ -186,6 +185,7 @@ export class SignUpPage {
         }
 
     }
+
     async clickSubmitButtonIfNotVisible() {
         const isVisible = await this.submitButton.isVisible();
 

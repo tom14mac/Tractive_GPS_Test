@@ -3,14 +3,15 @@ import { LoginPage } from "../Pages/login_page.js";
 import { HomePage } from "../Pages/Homepage.js";
 import { SignUpPage } from '../Pages/Signup_page.js';
 import { TestData } from '../testdata/TestData.js';
+import {Helper} from "../utils/helper.js";
 import { expect } from 'chai';
 
 describe('End-to-End Tests', function() {
     let browser, context, page;
-    let loginPage, homePage, signUpPage, testData;
+    let loginPage, homePage, signUpPage, testData,helper;
 
     before(async function () {
-        this.timeout(30000);  // Increase timeout for async operations
+        this.timeout(60000);  // Increase timeout for async operations
         browser = await firefox.launch({headless: false});
         context = await browser.newContext();
 
@@ -165,7 +166,6 @@ describe('End-to-End Tests', function() {
         // Wait for a moment for the submission to process
         console.log('Waiting for ...');
         await page.waitForTimeout(30000);  // Pause execution for 30 seconds
-        // Check for any dialog box (in case of success or failure)
         page.on('dialog', async (dialog) => {
             const alertMessage = dialog.message();
             console.log('Alert Message:', alertMessage);
@@ -180,7 +180,7 @@ describe('End-to-End Tests', function() {
         expect(currentUrl).to.include(currentUrl);
     });
 
-    it('should submit the Signup form wth Invalid data Passing', async function () {
+    it('should submit the Signup form with Invalid data Passing', async function () {
         this.timeout(70000);
         const InvalidData = testData.Invalid_signup_data(); // Retrieve valid signup data from test data
         // Enter Invalid data into the form fields
@@ -192,4 +192,21 @@ describe('End-to-End Tests', function() {
         await signUpPage.clickSubmitButtonIfNotVisible();
     });
 
+    it('should submit the Sign-Up form with new fresh_data with new Email data Passing', async function () {
+        this.timeout(70000); // Adjust timeout for async operations
+        const Valid_New_fresh_Data = testData.Valid_new_signup_data();
+        await signUpPage.enterFirstName(Valid_New_fresh_Data.firstName);
+        await signUpPage.enterLastname(Valid_New_fresh_Data.lastName);
+        await signUpPage.enterEmail(Valid_New_fresh_Data.email);
+        await signUpPage.enterPassword(Valid_New_fresh_Data.password);
+        await signUpPage.clickSubmitButtonIfVisible()
+        /*let alertMessage = '';
+        page.on('dialog', async (dialog) => {
+            alertMessage = dialog.message();
+            console.log('Alert Message: ', alertMessage);
+            await dialog.accept();
+        });
+        await page.waitForTimeout(1000);
+        expect(alertMessage).to.equal(alertMessage);*/
+    });
 });
