@@ -200,13 +200,13 @@ describe('End-to-End Tests', function() {
         await signUpPage.enterEmail(Valid_New_fresh_Data.email);
         await signUpPage.enterPassword(Valid_New_fresh_Data.password);
         await signUpPage.clickSubmitButtonIfVisible()
-        /*let alertMessage = '';
+        let alertMessage = '';
         page.on('dialog', async (dialog) => {
             alertMessage = dialog.message();
             console.log('Alert Message: ', alertMessage);
             await dialog.accept();
         });
         await page.waitForTimeout(1000);
-        expect(alertMessage).to.equal(alertMessage);*/
+        expect(alertMessage).to.equal(alertMessage);
     });
 });
