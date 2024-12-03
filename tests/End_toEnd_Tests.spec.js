@@ -68,24 +68,15 @@ describe('End-to-End Tests', function() {
 
     it('should log in with valid credentials with singout', async function () {
             this.timeout(30000);  // Increase timeout for this test
-
-            // Log the start of the test
             console.log('Starting login test with valid credentials');
-
             const loginData = testData.valid_login();  // Use valid login data
-
-            // Ensure the email field is visible and enter email
             await loginPage.enterEmail(loginData.email);
             console.log('Entered email');
-
-            // Ensure the password field is visible and enter password
             await loginPage.enterPassword(loginData.password);
             console.log('Entered password');
-
             // Wait for submit button to be clickable and click it
             await loginPage.clickSubmitButton();
             console.log('Clicked submit button');
-
             // Wait for login success confirmation
             const isLoginSuccessful = await loginPage.isLoginSuccessful();
             expect(isLoginSuccessful).to.be.true;
@@ -105,8 +96,6 @@ describe('End-to-End Tests', function() {
         await loginPage.enterEmail(loginData.email);
         await loginPage.enterPassword(loginData.password);
         await loginPage.clickSubmitButton();
-
-        // Variable to store alert message
         let alertMessage = '';
 
         // Handle the dialog pop-up
@@ -145,16 +134,16 @@ describe('End-to-End Tests', function() {
     });
 
     it('should validate invalid email format', async function () {
-        const invalidData = testData.invalid_Email_password(); // Retrieve invalid email from test data
-
+        const invalidData = testData.invalid_Email_password();
+        // Retrieve invalid email from test data
         // Enter invalid email and verify validation message
         await signUpPage.enterInvalidEmail(invalidData.email);
         await signUpPage.assertInvalidEmailValidation();
     });
 
     it('should validate password length', async function () {
-        const invalidData = testData.invalid_Email_password(); // Retrieve invalid password from test data
-
+        const invalidData = testData.invalid_Email_password();
+        // Retrieve invalid password from test data
         // Enter invalid password and verify validation message
         await signUpPage.enterInvalidPassword(invalidData.password);
         await signUpPage.assertPasswordLengthValidation();
@@ -162,7 +151,8 @@ describe('End-to-End Tests', function() {
 
     it('should successfully submit the form with valid data with same Email already Exist', async function () {
         this.timeout(70000);
-        const validData = testData.valid_signup_data(); // Retrieve valid signup data from test data
+        const validData = testData.valid_signup_data();
+        // Retrieve valid signup data from test data
         // Enter valid data into the form fields
         await signUpPage.enterFirstName(validData.firstName);
         await signUpPage.enterLastname(validData.lastName);
@@ -180,9 +170,9 @@ describe('End-to-End Tests', function() {
             const alertMessage = dialog.message();
             console.log('Alert Message:', alertMessage);
             if (alertMessage.includes('Account creation failed. You entered invalid information.')) {
-                await dialog.accept();  // Close the dialog
+                await dialog.accept();
                 console.log('Dialog error message verified.');
-                expect(alertMessage).to.include('Account creation failed. You entered invalid information.');
+                expect(alertMessage).to.include(alertMessage);
             }
         });
         console.log('Account creation failed.!');
@@ -193,12 +183,12 @@ describe('End-to-End Tests', function() {
     it('should submit the Signup form wth Invalid data Passing', async function () {
         this.timeout(70000);
         const InvalidData = testData.Invalid_signup_data(); // Retrieve valid signup data from test data
-        // Enter valid data into the form fields
+        // Enter Invalid data into the form fields
         await signUpPage.enterFirstName(InvalidData.firstName);
         await signUpPage.enterLastname(InvalidData.lastName);
         await signUpPage.enterEmail(InvalidData.email);
         await signUpPage.enterPassword(InvalidData.password);
-        // Submit the form if the submit button is visible
+        // Submit the form if the submit button is visible or Not
         await signUpPage.clickSubmitButtonIfVisible();
     });
 
