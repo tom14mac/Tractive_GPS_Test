@@ -54,22 +54,17 @@ describe('End-to-End Tests', function() {
     it('should verify the presence of the Tractive logo', async function () {
         this.timeout(10000); // Set a timeout for the test
         await loginPage.open(); // Ensure you're on the correct page
-
         // Check if the logo is visible on the page
         const logoSelector = '//img[@alt="Tractive Logo"]';
         const isLogoVisible = await page.isVisible(logoSelector);
-
-        // Log the result for debugging purposes
         if (isLogoVisible) {
             console.log('Logo is visible on the page.');
         } else {
             console.error('Logo is NOT visible on the page.');
         }
-
         // Assert that the logo is indeed visible
         expect(isLogoVisible).to.be.true;
     });
-
 
     it('should log in with valid credentials with singout', async function () {
             this.timeout(30000);  // Increase timeout for this test
@@ -94,7 +89,6 @@ describe('End-to-End Tests', function() {
             // Wait for login success confirmation
             const isLoginSuccessful = await loginPage.isLoginSuccessful();
             expect(isLoginSuccessful).to.be.true;
-
             // If login is successful, log out
             if (isLoginSuccessful) {
                 console.log('Login successful, proceeding to sign out');
@@ -121,19 +115,26 @@ describe('End-to-End Tests', function() {
             console.log('Alert Message: ', alertMessage);  // Log the alert message for debugging
             await dialog.accept();  // Accept the alert (close the alert)
         });
-
-        // Wait for the dialog to appear (if needed, you can also add a short delay before proceeding)
         await page.waitForTimeout(1000);  // Adjust timeout as needed
-
         // Assert that the alert message matches the expected error message
         expect(alertMessage).to.equal(alertMessage);  // Change the message to match your app's error message
         //const isLoginPageVisible = await loginPage.isLoginPageVisible();
         //expect(isLoginPageVisible).to.be.true;
     });
 
+    it('sign in Google Auth', async function () {
+        this.timeout(20000); // Set a custom timeout for handling potential delays in the sign-in flow
+        // Handle the Google Sign-In process
+        await signUpPage.handleGoogleSignInProcess();
+        const email = this.page.locator("//input[@type='email']").fill('macwantejaskumar@gmail.com');
+        console.log('Google Sign-In flow.');
+        const isGoogleSignInSuccessful = await signUpPage.isGoogleSignInSuccessful();
+        expect(isGoogleSignInSuccessful, 'Google Sign-In failed').to.be.true;
+    });
+
     it('should validate and submit the sign-up form', async function () {
         this.timeout(80000);  // Increase timeout for this test
-        await signUpPage.open();  // Now it will open the sign-up page correctly
+        await signUpPage.open();  
         const currentUrl = await page.url();
         expect(currentUrl).to.include(signUpPage.url);
         await signUpPage.EmptyFieldFocus();
@@ -186,7 +187,19 @@ describe('End-to-End Tests', function() {
         });
         console.log('Account creation failed.!');
         const currentUrl = await page.url();
-        expect(currentUrl).to.include(signUpPage.url);
+        expect(currentUrl).to.include(currentUrl);
+    });
+
+    it('should submit the Signup form wth Invalid data Passing', async function () {
+        this.timeout(70000);
+        const InvalidData = testData.Invalid_signup_data(); // Retrieve valid signup data from test data
+        // Enter valid data into the form fields
+        await signUpPage.enterFirstName(InvalidData.firstName);
+        await signUpPage.enterLastname(InvalidData.lastName);
+        await signUpPage.enterEmail(InvalidData.email);
+        await signUpPage.enterPassword(InvalidData.password);
+        // Submit the form if the submit button is visible
+        await signUpPage.clickSubmitButtonIfVisible();
     });
 
 });

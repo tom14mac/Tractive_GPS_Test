@@ -17,13 +17,32 @@ export class TestData {
         const password = this.generatePassword(8);    // Password generation
 
         return {
-            firstName: 'Test213213',      // Ensure this is properly set
-            lastName: '12321',
+            firstName: 'Test_data1',      // Ensure this is properly set
+            lastName: 'Test_data2',
             email: 'macwantejash@gmail.com',
             password: password
         };
     }
-    // Utility function to generate a password of the desired length
+
+    Invalid_signup_data() {
+        return {
+            firstName: '#@@#!@#;12!!!;',      // Ensure this is properly set
+            lastName: '@$%^$##$%%^^',
+            email: 'test@example.com AND 1=1 -- ',
+            password: 'password -- '
+        };
+    }
+    Valid_new_signup_data(){
+        const email = `user${Date.now()}@gmail.com`; // Dynamic email generation
+        const password = this.generatePassword(8);    // Password generation
+
+        return {
+            firstName: 'Alexa',      // Ensure this is properly set
+            lastName: 'muller',
+            email: email,
+            password: password
+        };
+    }
     generatePassword(minLength) {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()';
         let password = '';

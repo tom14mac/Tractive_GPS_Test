@@ -45,18 +45,14 @@ export class LoginPage {
     }
     // Reusable Dialog Handler Function
     async handleDialog(page, expectedMessage) {
-        let alertMessage = ''; // Variable to capture the dialog message
-
-        // Listen for the dialog event
+        let alertMessage = '';
         page.once('dialog', async (dialog) => {
-            alertMessage = dialog.message(); // Capture the dialog message
-            console.log(`Dialog received: ${alertMessage}`); // Debug log
-            await dialog.accept(); // Accept and close the dialog
+            alertMessage = dialog.message();
+            console.log(`Dialog received: ${alertMessage}`);
+            await dialog.accept();
         });
-
-        // Wait for a reasonable amount of time to ensure the dialog appears
         try {
-            await page.waitForTimeout(2000); // Adjust timeout based on application behavior
+            await page.waitForTimeout(2000);
             console.log('Waiting for the dialog...');
         } catch (error) {
             console.error('Dialog did not appear within the expected timeframe.');

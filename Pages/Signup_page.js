@@ -12,6 +12,7 @@ export class SignUpPage {
         this.pageTitleOptions = [
             'Tractive GPS - Create Account - Find your lost dog and cat',
         ];
+        this.submitButton = page.locator('//button[@type=\'submit\']');
 
         // Validation messages locators
         this.firstNameValidation = page.locator("//tcommon-form-field[@label='login.signUp.firstName']//em[normalize-space()='This field is required.']");
@@ -23,6 +24,8 @@ export class SignUpPage {
     }
 
     // This method will navigate to the SignUp page
+    submitButton;
+    page;
     async open() {
         await this.page.goto(this.url, { waitUntil: 'load' }); // Replace with your actual sign-up page URL
     }
@@ -68,34 +71,18 @@ export class SignUpPage {
     }
 
     async assertInvalidEmailValidation() {
-        // Wait for the element to become visible
         await this.page.waitForSelector('//em[normalize-space()=\'The email address is invalid.\']', { state: 'visible' });
-
-        // Check if the element is visible
         const isVisible = await this.emailFieldInvalid.isVisible();
         expect(isVisible).toBe(true);  // Assert that the element is visible
-
-        // Check the text content
         const text = await this.emailFieldInvalid.textContent();
         expect(text.trim()).toBe('The email address is invalid.');
     }
     async assertPasswordLengthValidation() {
-        // Wait for the element to become visible
-        await this.page.waitForSelector('//em[normalize-space()=\'Minimum length is 8 characters.\']', { state: 'visible' });
-
-        // Define a locator for the element
-        const locator = this.page.locator('//em[normalize-space()=\'Minimum length is 8 characters.\']');
-
-        // Check if the element is visible
-        const isVisible = await locator.isVisible();
+        const isVisible = await this.passwordlenght.isVisible();
         expect(isVisible).toBe(true);  // Assert that the element is visible
-
-        // Check the text content
-        const text = await locator.textContent();
+        const text = await this.passwordlenght.textContent();
         expect(text.trim()).toBe('Minimum length is 8 characters.');
     }
-
-
     async assertPasswordValidation() {
         const isVisible = await this.passwordValidation.isVisible();  // Check visibility using isVisible()
         expect(isVisible).toBe(true);  // Assert that the element is visible
@@ -161,11 +148,39 @@ export class SignUpPage {
             console.log("Checkbox is not visible.");
         }
     }
+    async handleGoogleSignInProcess() {
+        try {
+            // Click the "Sign In with Google" button
+            const googleSignInButton = this.page.locator("//tcommon-google-signin-button[@class='ng-isolate-scope']");
+            if (await googleSignInButton.isVisible()) {
+                await googleSignInButton.click();
+                console.log("Clicked on 'Sign In with Google' button.");
+            } else {
+                throw new Error("'Sign In with Google' button not found.");
+            }
+            await this.page.waitForSelector('iframe', { state: 'attached', timeout: 10000 }); // Adjust selector as needed
+            console.log("Google Sign-In iframe appeared.");
+            // Switch to the iframe
+            const iframe = await this.page.frame({
+                url: /accounts\.google\.com/ // Match the iframe URL dynamically
+            });
+            if (!iframe) throw new Error("Google Sign-In iframe not found or failed to load.");
+            console.log("Switched to Google Sign-In iframe.");
+            const userLocator = iframe.locator("//iframe[@id='gsi_862948_12528']");
+            await userLocator.waitFor({ state: 'visible', timeout: 5000 });
+            console.log("Located user email inside the iframe.");
+            await userLocator.click();
+            console.log("Clicked on the user email successfully.");
+            } catch (error) {
+            console.error("Error during Google Sign-In process:", error.message);
+            throw error;
+        }
+    }
+
     async clickSubmitButtonIfVisible() {
-        const submitButton = this.page.locator("//button[@type='submit']");
-        const isVisible = await submitButton.isVisible();
+        const isVisible = await this.submitButton.isVisible();
         if (isVisible) {
-            await submitButton.click();
+            await this.submitButton.click();
             console.log("Submit button clicked successfully.");
         } else {
             console.log("Submit button is not visible.");
