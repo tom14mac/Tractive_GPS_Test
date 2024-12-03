@@ -189,7 +189,7 @@ describe('End-to-End Tests', function() {
         await signUpPage.enterEmail(InvalidData.email);
         await signUpPage.enterPassword(InvalidData.password);
         // Submit the form if the submit button is visible or Not
-        await signUpPage.clickSubmitButtonIfVisible();
+        await signUpPage.clickSubmitButtonIfNotVisible();
     });
 
 });

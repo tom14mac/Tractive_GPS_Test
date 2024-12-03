@@ -158,20 +158,19 @@ export class SignUpPage {
             } else {
                 throw new Error("'Sign In with Google' button not found.");
             }
-            await this.page.waitForSelector('iframe', { state: 'attached', timeout: 10000 }); // Adjust selector as needed
+            await this.page.waitForSelector('iframe', { state: 'attached', timeout: 10000 });
             console.log("Google Sign-In iframe appeared.");
-            // Switch to the iframe
-            const iframe = await this.page.frame({
-                url: /accounts\.google\.com/ // Match the iframe URL dynamically
-            });
-            if (!iframe) throw new Error("Google Sign-In iframe not found or failed to load.");
+            const iframe = await this.page.frame({ url: /accounts\.google\.com/ });
+            if (!iframe) {
+                throw new Error("Google Sign-In iframe not found or failed to load.");
+            }
             console.log("Switched to Google Sign-In iframe.");
-            const userLocator = iframe.locator("//iframe[@id='gsi_862948_12528']");
-            await userLocator.waitFor({ state: 'visible', timeout: 5000 });
-            console.log("Located user email inside the iframe.");
-            await userLocator.click();
+            const iframeLocator = iframe.locator("//iframe[@id='gsi_862948_12528']");
+            await iframeLocator.waitFor({ state: 'visible', timeout: 50000 });
+            console.log("Located user email iframe inside the Google Sign-In iframe.");
+            await iframeLocator.click();
             console.log("Clicked on the user email successfully.");
-            } catch (error) {
+        } catch (error) {
             console.error("Error during Google Sign-In process:", error.message);
             throw error;
         }
@@ -186,6 +185,22 @@ export class SignUpPage {
             console.log("Submit button is not visible.");
         }
 
+    }
+    async clickSubmitButtonIfNotVisible() {
+        const isVisible = await this.submitButton.isVisible();
+
+        if (!isVisible) {
+            console.log("Submit button is not visible, attempting to click.");
+            await this.submitButton.click();
+            console.log("Submit button clicked successfully.");
+        } else {
+            const isHidden = await this.submitButton.isHidden();
+            if (isHidden) {
+                console.log("Submit button is hidden using CSS.");
+            } else {
+                console.log("Submit button is visible, skipping click.");
+            }
+        }
     }
 
     timeout(number) {
